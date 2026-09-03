@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#4A7C59"/>
+  <!-- Main herbal leaf -->
+  <path fill="#F9F5ED" d="M50 15 C28 32 24 58 40 76 C46 83 50 85 50 85 C50 85 54 83 60 76 C76 58 72 32 50 15 Z"/>
+  <!-- Natural leaf vein accents -->
+  <path stroke="#4A7C59" stroke-width="3" stroke-linecap="round" fill="none" d="M50 24 V78 M50 38 L62 30 M50 50 L38 42 M50 62 L60 54 M50 70 L42 64"/>
+</svg>

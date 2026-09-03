@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery · Ayurveda | Ayurvedic Wellness Visual Journey</title>
+    <!-- Custom Favicon – Herbal leaf -->
+    <link rel="icon" type="image/svg+xml" href="assest/favicon.svg">
+
+    <!-- Tailwind CSS -->
+    <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        herb: '#EA580C',
+                        clay: '#F59E0B',
+                        sand: '#FFF7ED',
+                        soil: '#7F1D1D',
+                        cream: '#FAFAF9',
+                        dusk: '#78716C',
+                    },
+                    fontFamily: {
+                        'display': ['"Playfair Display"', 'serif'],
+                        'body': ['"Nunito"', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'float-slow': 'floatSlow 6s ease-in-out infinite',
+                        'spin-slow': 'spinSlow 12s linear infinite',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-gentle': 'bounceGentle 2.5s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'herb-spin': 'herbSpin 4s ease-in-out infinite',
+                        'gallery-zoom': 'galleryZoom 8s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        floatSlow: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        spinSlow: { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } },
+                        slideUp: { '0%': { transform: 'translateY(40px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        bounceGentle: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-5px)' } },
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        herbSpin: { '0%': { transform: 'rotate(0deg) scale(1)' }, '50%': { transform: 'rotate(10deg) scale(1.05)' }, '100%': { transform: 'rotate(0deg) scale(1)' } },
+                        galleryZoom: { '0%': { transform: 'scale(1)' }, '100%': { transform: 'scale(1.05)' } },
+                    },
+                    backgroundImage: {
+                        'herb-pattern': "radial-gradient(circle at 20% 30%, rgba(234, 88, 12, 0.06) 0%, transparent 70%)",
+                        'leaf-texture': "url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M30 10 L35 25 L50 30 L35 40 L38 55 L30 45 L22 55 L25 40 L10 30 L25 25 Z%22 fill=%22rgba(234,88,12,0.03)%22/%3E%3C/svg%3E')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #FAFAF9;
+            color: #7F1D1D;
+            font-family: 'Nunito', system-ui, sans-serif;
+        }
+        .dark body {
+            background-color: #1C1917;
+            color: #F5F5F4;
+        }
+        
+        
+        .dark nav {
+            background-color: rgba(28, 25, 23, 0.96) !important;
+            border-color: rgba(234, 88, 12, 0.25) !important;
+        }
+        .dark section.bg-white,
+        .dark section[class*="bg-white"],
+        .dark section.dark\:bg-\[\#2D2A3A\] {
+            background-color: #0C0A09 !important;
+        }
+
+        body::-webkit-scrollbar { width: 6px; }
+        body::-webkit-scrollbar-track { background: #FFF7ED; border-radius: 10px; }
+        body::-webkit-scrollbar-thumb { background: #EA580C; border-radius: 10px; }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(234, 88, 12, 0.08);
+        }
+        .dark .gallery-item {
+            border-color: rgba(234, 88, 12, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -12px rgba(234, 88, 12, 0.25);
+            border-color: #4A7C59;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            display: block;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.04);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(234, 88, 12, 0.7) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-overlay h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+            transform: translateY(10px);
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover .gallery-overlay h3 {
+            transform: translateY(0);
+        }
+        .gallery-overlay p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.8rem;
+            transform: translateY(10px);
+            transition: transform 0.4s ease 0.05s;
+        }
+        .gallery-item:hover .gallery-overlay p {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background-color: #4A7C59;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+        }
+        .btn-primary:hover {
+            background-color: #3A6548;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.45);
+        }
+        .btn-outline {
+            border: 1.5px solid #4A7C59;
+            color: #4A7C59;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .btn-outline:hover {
+            background-color: #4A7C59;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2.5px;
+            background-color: #4A7C59;
+            transition: width 0.25s ease;
+            border-radius: 3px;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .dropdown-herb {
+            position: relative;
+        }
+        .dropdown-herb-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 210px;
+            background: white;
+            border-radius: 18px;
+            padding: 0.6rem 0;
+            box-shadow: 0 18px 32px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(12px);
+            transition: all 0.25s ease;
+            z-index: 1000;
+            border: 1px solid rgba(234, 88, 12, 0.2);
+        }
+        .dark .dropdown-herb-menu {
+            background: #292524;
+            border-color: rgba(234, 88, 12, 0.4);
+        }
+        .dropdown-herb:hover .dropdown-herb-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 0.65rem 1.4rem;
+            transition: all 0.2s;
+            color: #7F1D1D;
+        }
+        .dark .dropdown-item {
+            color: #F5F5F4;
+        }
+        .dropdown-item:hover {
+            background-color: #FAFAF9;
+            color: #4A7C59;
+            padding-left: 1.7rem;
+        }
+        .dropdown-item i {
+            margin-right: 0.75rem;
+            width: 20px;
+        }
+
+        .mobile-menu-herb {
+            background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 0 24px 24px;
+        }
+        .dark .mobile-menu-herb {
+            background: #121212;
+        }
+        .mobile-menu-herb.open {
+            max-height: 80vh;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .mobile-menu-herb.open::-webkit-scrollbar {
+            display: none;
+        }
+
+        .social-icon-herb {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FAFAF9;
+            color: #4A7C59;
+            transition: all 0.3s;
+        }
+        .social-icon-herb:hover {
+            background-color: #4A7C59;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .dark .social-icon-herb {
+            background-color: #6D6875;
+            color: #F5F5F4;
+        }
+        .dark .social-icon-herb:hover {
+            background-color: #4A7C59;
+            color: #121212;
+        }
+
+        .gallery-tag {
+            display: inline-block;
+            background: rgba(234, 88, 12, 0.10);
+            color: #4A7C59;
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.2rem 0.7rem;
+            border-radius: 50px;
+            border: 1px solid rgba(234, 88, 12, 0.12);
+        }
+        .dark .gallery-tag {
+            background: rgba(234, 88, 12, 0.18);
+            color: #8BB99C;
+        }
+
+        [dir="rtl"] .ml-auto { margin-left: 0 !important; margin-right: auto !important; }
+        [dir="rtl"] .border-l-4 { border-left-width: 0 !important; border-right-width: 4px !important; }
+        [dir="rtl"] .ml-1 { margin-left: 0 !important; margin-right: 0.25rem !important; }
+        html[dir="rtl"] .dropdown-herb-menu { left: auto; right: 0; }
+        html[dir="rtl"] .dropdown-item i { margin-right: 0; margin-left: 0.75rem; }
+        html[dir="rtl"] .dropdown-item:hover { padding-left: 1.4rem; padding-right: 1.7rem; }
+    
+        /* High Contrast Dark Mode Form & Badge Fixes */
+        .dark input, .dark select, .dark textarea {
+            background-color: #121813 !important;
+            color: #FFFFFF !important;
+            border-color: rgba(234, 88, 12, 0.3) !important;
+        }
+        .dark input::placeholder, .dark textarea::placeholder {
+            color: #D1D5DB !important;
+            opacity: 1 !important;
+        }
+        .dark select option {
+            background-color: #292524 !important;
+            color: #FFFFFF !important;
+        }
+        .dark label {
+            color: #F3F4F6 !important;
+        }
+        .dark .contact-card, .dark .consult-card, .dark .herb-card, .dark .auth-card {
+            background-color: #292524 !important;
+            border-color: rgba(234, 88, 12, 0.25) !important;
+        }
+
+    </style>
+</head>
+<body class="herb-pattern leaf-texture">
+
+    <!-- ====== NAVIGATION (exactly same as home page) ====== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#121613]/95 backdrop-blur-md border-b border-sand dark:border-dusk/30 shadow-sm">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-24 md:h-24 py-3 md:py-0">
+                <!-- Logo -->
+                <a class='flex items-center gap-2 md:gap-3 group shrink-0' href='index.html'>
+                    <div class="w-9 h-9 md:w-10 md:h-10 bg-herb rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition duration-300">
+                        <i class="fas fa-leaf text-white text-base md:text-lg animate-herb-spin"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg md:text-2xl font-display font-bold tracking-tight text-soil dark:text-white">NatureVeda</span>
+                    </div>
+                </a>
+
+                <div class="flex items-center gap-3 lg:gap-4 xl:gap-8 ml-auto rtl:ml-0 rtl:mr-auto">
+                    <!-- Desktop nav -->
+                    <div class="hidden lg:flex items-center gap-3 xl:gap-6">
+                        <div class="dropdown-herb">
+                            <button class="nav-link text-dusk dark:text-gray-200 hover:text-herb transition flex items-center gap-1 py-2 whitespace-nowrap text-sm xl:text-base">
+                                Home <i class="fas fa-chevron-down text-xs ml-1"></i>
+                            </button>
+                            <div class="dropdown-herb-menu">
+                                <a class="dropdown-item" href="index.html"> Home 1</a>
+                                <a class="dropdown-item" href="home2.html"> Home 2</a>
+                            </div>
+                        </div>
+                        <a class="nav-link text-dusk dark:text-gray-200 hover:text-herb transition whitespace-nowrap text-sm xl:text-base" href="about.html">About</a>
+                        <a class="nav-link text-dusk dark:text-gray-200 hover:text-herb transition whitespace-nowrap text-sm xl:text-base" href="products.html">Products</a>
+                        <a class="nav-link text-dusk dark:text-gray-200 hover:text-herb transition whitespace-nowrap text-sm xl:text-base" href="glossary.html">Glossary</a>
+                        <a class="nav-link text-herb dark:text-[#A7F3D0] font-bold transition whitespace-nowrap text-sm xl:text-base" href="gallery.html">Gallery</a>
+                        <a class="nav-link text-dusk dark:text-gray-200 hover:text-herb transition whitespace-nowrap text-sm xl:text-base" href="book.html">Book Consultation</a>
+                        <a class="nav-link text-dusk dark:text-gray-200 hover:text-herb transition whitespace-nowrap text-sm xl:text-base" href="contact.html">Contact</a>
+                    </div>
+
+                    <!-- Desktop actions -->
+                    <div class="hidden lg:flex items-center gap-4 ml-2">
+                        <button id="theme-toggle" class="w-10 h-10 rounded-full bg-sand dark:bg-dusk/40 text-herb dark:text-[#A7F3D0] hover:scale-110 transition flex items-center justify-center">
+                            <i class="fas fa-moon dark:hidden text-herb"></i>
+                            <i class="fas fa-sun hidden dark:inline text-amber-300"></i>
+                        </button>
+                        <button id="rtl-toggle" class="w-10 h-10 rounded-full bg-sand dark:bg-dusk/40 text-herb dark:text-[#A7F3D0] hover:scale-110 transition flex items-center justify-center font-bold text-base" title="Toggle RTL/LTR">⇄</button>
+                    <div class="dropdown-herb">
+                            <button class="w-10 h-10 rounded-full bg-herb/20 dark:bg-herb/20 text-herb dark:text-[#A7F3D0] hover:bg-herb hover:text-white transition flex items-center justify-center">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <div class="dropdown-herb-menu" style="left: auto; right: 0;">
+                                <a class="dropdown-item" href="login.html">Log in</a>
+                                <a class="dropdown-item" href="signup.html">Sign Up</a>
+                            </div>
+                        </div>
+                        </div>
+
+                    <!-- Mobile toggle -->
+                    <button id="mobile-toggle" class="lg:hidden w-10 h-10 rounded-full bg-herb text-white flex items-center justify-center shadow-md">
+                        <i class="fas fa-bars text-base"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu-herb lg:hidden">
+                <div class="py-4 px-3 space-y-1">
+                    <div class="py-1">
+                        <button onclick="document.getElementById('home-mobile-drop').classList.toggle('hidden'); document.getElementById('home-mobile-icon').classList.toggle('rotate-180')" class="w-full flex items-center justify-between py-3 px-4 font-medium text-dusk dark:text-gray-200 hover:bg-sand dark:hover:bg-dusk/30 rounded-xl transition cursor-pointer">
+                            <span>Home</span>
+                            <i id="home-mobile-icon" class="fas fa-chevron-down text-xs opacity-60 transition-transform duration-300"></i>
+                        </button>
+                        <div id="home-mobile-drop" class="hidden pl-2 space-y-1 mt-1 mb-2">
+                            <a class="block py-2.5 px-4 font-medium text-herb dark:text-[#A7F3D0] bg-herb/5 border-l-4 border-herb rounded-xl transition" href="index.html">Home 1</a>
+                            <a class="block py-2.5 px-4 font-medium text-dusk dark:text-gray-200 hover:bg-sand dark:hover:bg-dusk/30 rounded-xl transition" href="home2.html">Home 2</a>
+                        </div>
+                    </div>
+                    <a class="block py-3 px-4 font-medium text-dusk dark:text-gray-200 hover:bg-sand dark:hover:bg-dusk/30 rounded-xl transition" href="about.html">About</a>
+                    <a class="block py-3 px-4 font-medium text-dusk dark:text-gray-200 hover:bg-sand dark:hover:bg-dusk/30 rounded-xl transition" href="products.html">Products</a>
+                    <a class="block py-3 px-4 font-medium text-dusk dark:text-gray-200 hover:bg-sand dark:hover:bg-dusk/30 rounded-xl transition" href="glossary.html">Glossary</a>
+                    <a class="block py-3 px-4 font-bold text-herb dark:text-[#A7F3D0] bg-herb/20 dark:bg-herb/20 border-l-4 border-herb rounded-xl transition" href="gallery.html">Gallery</a>
+                    <a class="block py-3 px-4 font-medium text-dusk dark:text-gray-200 hover:bg-sand dark:hover:bg-dusk/30 rounded-xl transition" href="book.html">Book Consultation</a>
+                    <a class="block py-3 px-4 font-medium text-dusk dark:text-gray-200 hover:bg-sand dark:hover:bg-dusk/30 rounded-xl transition" href="contact.html">Contact</a>
+                    <div class="flex flex-col gap-3 pt-5 mt-3 border-t border-sand dark:border-dusk/40">
+                        <div class="flex gap-3">
+                            <button id="mobile-theme-toggle" class="flex-1 py-2 rounded-full bg-sand dark:bg-dusk/40 text-herb dark:text-[#A7F3D0] text-sm font-medium flex items-center gap-2 justify-center">
+                                <i class="fas fa-moon dark:hidden text-herb"></i><i class="fas fa-sun hidden dark:inline text-amber-300"></i> Theme
+                            </button>
+                            <button id="mobile-rtl-toggle" class="flex-1 py-2 rounded-full bg-sand dark:bg-dusk/40 text-herb dark:text-[#A7F3D0] text-sm font-medium flex items-center gap-2 justify-center">
+                                ⇄ RTL Mode
+                            </button>
+                        </div>
+                    <a class="text-center py-2 rounded-full font-medium text-herb dark:text-[#A7F3D0] border border-herb" href="login.html">Log in</a>
+                        <a class="text-center btn-primary py-2 rounded-full" href="signup.html">Sign Up Free</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====== GALLERY HERO ====== -->
+    <section class="min-h-screen flex items-center pt-36 pb-12 relative overflow-hidden bg-[#18201A] dark:bg-black text-white">
+        <div class="absolute inset-x-0 bottom-0 top-24 z-0">
+            <img src="assest/gallery_mortar_remedy.jpg" alt="Gallery Herbs Background" class="w-full h-full object-cover opacity-45">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-[#18201A] dark:to-black z-0"></div>
+            <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-herb/20 blur-3xl"></div>
+            <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-clay/10 blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="max-w-4xl mx-auto animate-slide-up">
+                <span class="inline-block bg-herb/20 text-[#A7F3D0] text-sm font-bold px-5 py-1.5 rounded-full uppercase tracking-wider mb-6 border border-herb/30">📸 Visual Journey</span>
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white leading-tight mb-6">
+                    Ayurveda in <span class="text-[#A7F3D0]">Harmony</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto font-normal drop-shadow-md">
+                    A glimpse into the world of Ayurveda — where nature, tradition, and wellbeing come together.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== GALLERY GRID ====== -->
+    <main class="py-12 bg-white dark:bg-[#121613] relative z-20">
+        <div class="container mx-auto px-6">
+            
+            <!-- Category filter tags -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <span class="gallery-tag bg-herb text-soil dark:text-white border-herb">All</span>
+                <span class="gallery-tag hover:bg-herb hover:text-soil dark:text-white transition-colors cursor-pointer">🌿 Herbs</span>
+                <span class="gallery-tag hover:bg-herb hover:text-soil dark:text-white transition-colors cursor-pointer">🧘 Wellness</span>
+                <span class="gallery-tag hover:bg-herb hover:text-soil dark:text-white transition-colors cursor-pointer">🌸 Skincare</span>
+                <span class="gallery-tag hover:bg-herb hover:text-soil dark:text-white transition-colors cursor-pointer">🌱 Nature</span>
+                <span class="gallery-tag hover:bg-herb hover:text-soil dark:text-white transition-colors cursor-pointer">🍵 Teas</span>
+            </div>
+
+            <!-- Equal size image cards grid (6 Cards) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                
+                <!-- Item 1: Herbal Tea Blending -->
+                <div class="relative group rounded-[32px] overflow-hidden aspect-[4/3] shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-sand/50 dark:border-white/10 cursor-pointer">
+                    <img src="assest/gallery_tea_blend.jpg" alt="Herbal Tea Blending" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#121613] via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                        <span class="bg-herb/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full w-max mb-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">🍵 Teas</span>
+                        <h3 class="text-2xl font-bold text-white font-display mb-1 transform group-hover:-translate-y-1 transition-transform duration-500">Herbal Tea Blending</h3>
+                        <p class="text-sm text-[#A7F3D0] font-medium translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 ease-out">Crafting signature botanical infusions</p>
+                    </div>
+                </div>
+
+                <!-- Item 2: Sacred Organic Herbs -->
+                <div class="relative group rounded-[32px] overflow-hidden aspect-[4/3] shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-sand/50 dark:border-white/10 cursor-pointer">
+                    <img src="assest/gallery_sacred_herbs.jpg" alt="Sacred Organic Herbs" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#121613] via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                        <span class="bg-clay/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full w-max mb-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">🌿 Herbs</span>
+                        <h3 class="text-2xl font-bold text-white font-display mb-1 transform group-hover:-translate-y-1 transition-transform duration-500">Sacred Organic Herbs</h3>
+                        <p class="text-sm text-clay font-medium translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 ease-out">Freshly harvested botanicals</p>
+                    </div>
+                </div>
+
+                <!-- Item 3: Traditional Oils & Elixirs -->
+                <div class="relative group rounded-[32px] overflow-hidden aspect-[4/3] shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-sand/50 dark:border-white/10 cursor-pointer">
+                    <img src="assest/gallery_herbal_oils.jpg" alt="Traditional Oils & Elixirs" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#121613] via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                        <span class="bg-amber-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full w-max mb-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">💧 Elixirs</span>
+                        <h3 class="text-2xl font-bold text-white font-display mb-1 transform group-hover:-translate-y-1 transition-transform duration-500">Oils &amp; Elixirs</h3>
+                        <p class="text-sm text-amber-300 font-medium translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 ease-out">Cold-pressed herbal infusions</p>
+                    </div>
+                </div>
+
+                <!-- Item 4: Mortar & Herbal Remedies -->
+                <div class="relative group rounded-[32px] overflow-hidden aspect-[4/3] shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-sand/50 dark:border-white/10 cursor-pointer">
+                    <img src="assest/gallery_mortar_remedy.jpg" alt="Mortar & Herbal Remedies" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#121613] via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                        <span class="bg-soil/90 dark:bg-white/90 backdrop-blur-sm text-white dark:text-soil text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full w-max mb-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">⚒️ Craft</span>
+                        <h3 class="text-2xl font-bold text-white font-display mb-1 transform group-hover:-translate-y-1 transition-transform duration-500">Mortar &amp; Remedies</h3>
+                        <p class="text-sm text-gray-300 font-medium translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 ease-out">Traditional hand-crafted pastes</p>
+                    </div>
+                </div>
+
+                <!-- Item 5: Yoga & Mindfulness -->
+                <div class="relative group rounded-[32px] overflow-hidden aspect-[4/3] shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-sand/50 dark:border-white/10 cursor-pointer">
+                    <img src="assest/gallery_yoga_mindfulness.jpg" alt="Yoga & Mindfulness" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#121613] via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                        <span class="bg-teal-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full w-max mb-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">🧘 Wellness</span>
+                        <h3 class="text-2xl font-bold text-white font-display mb-1 transform group-hover:-translate-y-1 transition-transform duration-500">Yoga &amp; Mindfulness</h3>
+                        <p class="text-sm text-teal-300 font-medium translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 ease-out">Harmonizing body, mind &amp; spirit</p>
+                    </div>
+                </div>
+
+                <!-- Item 6: Ayurvedic Skincare Rituals -->
+                <div class="relative group rounded-[32px] overflow-hidden aspect-[4/3] shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-sand/50 dark:border-white/10 cursor-pointer">
+                    <img src="assest/gallery_skincare_ritual.jpg" alt="Ayurvedic Skincare Rituals" class="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-out">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#121613] via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                        <span class="bg-pink-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full w-max mb-3 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">🌸 Skincare</span>
+                        <h3 class="text-2xl font-bold text-white font-display mb-1 transform group-hover:-translate-y-1 transition-transform duration-500">Skincare Rituals</h3>
+                        <p class="text-sm text-pink-300 font-medium translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 ease-out">Botanical beauty &amp; clay masks</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom note -->
+            <div class="text-center mt-12 pt-8 border-t border-sand dark:border-dusk/20 max-w-2xl mx-auto">
+                <p class="text-sm text-dusk dark:text-gray-300">
+                    <i class="fas fa-camera text-herb dark:text-[#A7F3D0] mr-2"></i>
+                    A visual celebration of Ayurvedic living — each image tells a story of nature, tradition, and wellbeing.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ====== NEW SECTION: IMMERSIVE HEALING ENVIRONMENTS ====== -->
+    <section class="py-24 bg-white dark:bg-[#15131F] relative overflow-hidden">
+        <!-- Abstract background shapes -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-herb/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-clay/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 items-center max-w-7xl mx-auto">
+                <!-- Visual Side -->
+                <div class="w-full lg:w-1/2 relative">
+                    <div class="relative rounded-[40px] overflow-hidden shadow-2xl">
+                        <img src="assest/p13.jpg" alt="Ayurvedic Healing Environment" class="w-full h-[500px] object-cover hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8 bg-white/10 dark:bg-black/30 backdrop-blur-md rounded-3xl p-6 border border-white/20 shadow-xl">
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center text-herb text-xl shadow-lg shrink-0">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold font-display text-xl mb-1">Panchakarma Center</h4>
+                                    <p class="text-white/80 text-sm font-medium">Authentic Kerala-style therapies</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Floating decorative image -->
+                    <div class="absolute -bottom-12 -right-8 w-56 h-56 rounded-[32px] overflow-hidden border-[6px] border-white dark:border-[#15131F] shadow-2xl hidden md:block rotate-6 hover:rotate-0 transition-transform duration-500 z-20">
+                        <img src="assest/p4.jpg" alt="Healing oils" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Text Side -->
+                <div class="w-full lg:w-1/2">
+                    <span class="inline-flex items-center gap-2 bg-clay/10 dark:bg-clay/20 border border-clay/30 text-clay dark:text-amber-200 font-bold text-xs uppercase tracking-widest px-5 py-2 rounded-full mb-6">
+                        <i class="fas fa-spa"></i> Healing Spaces
+                    </span>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-soil dark:text-white leading-tight mb-6">
+                        Step Into Our <span class="text-clay">Sanctuary</span>
+                    </h2>
+                    <p class="text-dusk dark:text-gray-300 text-lg leading-relaxed mb-10">
+                        Beyond our herbal formulations lies a physical space dedicated entirely to your rejuvenation. Our wellness retreat is designed using Vastu Shastra principles, ensuring that energy flows harmoniously to support your healing journey.
+                    </p>
+                    
+                    <ul class="space-y-5 mb-12">
+                        <li class="flex items-start gap-5 p-5 bg-sand/30 dark:bg-white/5 rounded-[24px] border border-sand dark:border-white/10 hover:border-herb dark:hover:border-herb/50 transition-colors group cursor-default">
+                            <div class="w-12 h-12 rounded-full bg-white dark:bg-[#1E1C2B] shadow-sm flex items-center justify-center text-herb shrink-0 group-hover:scale-110 group-hover:bg-herb group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-fire-burner"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-soil dark:text-white font-bold text-lg mb-1">Traditional Copper Vessels</h4>
+                                <p class="text-sm text-dusk dark:text-gray-400">Authentic tools used for Shirodhara and warm oil treatments.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-5 p-5 bg-sand/30 dark:bg-white/5 rounded-[24px] border border-sand dark:border-white/10 hover:border-herb dark:hover:border-herb/50 transition-colors group cursor-default">
+                            <div class="w-12 h-12 rounded-full bg-white dark:bg-[#1E1C2B] shadow-sm flex items-center justify-center text-herb shrink-0 group-hover:scale-110 group-hover:bg-herb group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-soil dark:text-white font-bold text-lg mb-1">Aromatherapy Chambers</h4>
+                                <p class="text-sm text-dusk dark:text-gray-400">Rooms infused with pure botanical hydrosols and burning incenses.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <a href="book.html" class="inline-flex items-center gap-3 bg-soil text-white px-8 py-4 rounded-full font-bold hover:bg-herb transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        Explore Our Retreat <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== EXTRA SECTION 1: CRAFTSMANSHIP & BEHIND THE SCENES ====== -->
+    <section class="py-20 bg-gradient-to-b from-cream/40 via-white to-[#121813]/30 dark:from-[#1A1825] dark:via-[#221F33] dark:to-[#1A1825] relative overflow-hidden border-t border-sand/60 dark:border-dusk/20">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-14">
+                <span class="inline-flex items-center gap-2 bg-herb/20 dark:bg-herb/20 border border-[#7EC891]/30 text-herb dark:text-[#A7F3D0] font-bold text-xs uppercase tracking-widest px-5 py-2 rounded-full shadow-sm">
+                    <i class="fas fa-camera"></i> Behind the Lens
+                </span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-4 text-soil dark:text-white">The Art of Herbal Crafting</h2>
+                <p class="text-dusk dark:text-gray-300 max-w-xl mx-auto mt-2 text-sm leading-relaxed">Every image captures a moment of devotion to nature and traditional healing.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="group bg-white/90 dark:bg-[#1E1C2B]/90 backdrop-blur-sm p-8 rounded-3xl border border-sand/80 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden border-t-4 border-t-herb">
+                    <div class="w-14 h-14 rounded-2xl bg-herb/15 text-herb dark:text-[#A7F3D0] flex items-center justify-center mb-6 text-2xl group-hover:scale-110 group-hover:bg-herb group-hover:text-white transition-all duration-300 shadow-sm"><i class="fas fa-seedling"></i></div>
+                    <h3 class="text-xl font-bold text-soil dark:text-white mb-3">Sacred Harvesting</h3>
+                    <p class="text-xs text-dusk dark:text-gray-300 leading-relaxed">Herbs are picked at optimal lunar phases and solar alignments for maximum vital force (Prana).</p>
+                </div>
+                <div class="group bg-white/90 dark:bg-[#1E1C2B]/90 backdrop-blur-sm p-8 rounded-3xl border border-sand/80 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden border-t-4 border-t-clay">
+                    <div class="w-14 h-14 rounded-2xl bg-clay/15 text-clay flex items-center justify-center mb-6 text-2xl group-hover:scale-110 group-hover:bg-clay group-hover:text-white transition-all duration-300 shadow-sm"><i class="fas fa-sun"></i></div>
+                    <h3 class="text-xl font-bold text-soil dark:text-white mb-3">Shade &amp; Sun Drying</h3>
+                    <p class="text-xs text-dusk dark:text-gray-300 leading-relaxed">Naturally dehydrated under controlled shade to lock in volatile essential oils and chlorophyll.</p>
+                </div>
+                <div class="group bg-white/90 dark:bg-[#1E1C2B]/90 backdrop-blur-sm p-8 rounded-3xl border border-sand/80 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden border-t-4 border-t-soil dark:border-t-white">
+                    <div class="w-14 h-14 rounded-2xl bg-soil/10 dark:bg-white/15 text-soil dark:text-white flex items-center justify-center mb-6 text-2xl group-hover:scale-110 group-hover:bg-soil group-hover:text-white transition-all duration-300 shadow-sm"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 class="text-xl font-bold text-soil dark:text-white mb-3">Hand-Pounded Blends</h3>
+                    <p class="text-xs text-dusk dark:text-gray-300 leading-relaxed">Small batches ground using traditional stone mortar pestles (Kharal) to retain thermal purity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== EXTRA SECTION 2: INSTAGRAM & COMMUNITY SPOTLIGHT ====== -->
+    <section class="py-20 bg-white dark:bg-[#15131F] border-t border-sand/60 dark:border-dusk/20 relative">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto bg-gradient-to-br from-herb/10 via-cream/50 to-clay/10 dark:from-herb/20 dark:via-[#1E1C2B] dark:to-clay/20 p-10 md:p-14 rounded-3xl border border-[#7EC891]/30 dark:border-white/10 shadow-xl relative overflow-hidden">
+                <span class="inline-flex items-center gap-2 bg-herb/20 dark:bg-herb/20 border border-[#7EC891]/30 text-herb dark:text-[#A7F3D0] font-bold text-xs uppercase tracking-widest px-5 py-2 rounded-full shadow-sm mb-4">
+                    <i class="fab fa-instagram"></i> Social Community
+                </span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-soil dark:text-white mb-4">Share Your #AyurvedaRitual</h2>
+                <p class="text-dusk dark:text-gray-300 text-sm max-w-xl mx-auto mb-8 leading-relaxed">Tag <span class="font-bold text-herb dark:text-[#A7F3D0]">@AyurvedaAyurveda</span> on Instagram to feature your daily wellness moments in our worldwide gallery.</p>
+                <div class="flex justify-center">
+                    <a href="https://instagram.com" target="_blank" class="bg-herb text-white px-8 py-3.5 rounded-full font-bold shadow-lg hover:bg-herb-dark hover:scale-105 transition duration-300 inline-flex items-center gap-3 text-sm">
+                        <i class="fab fa-instagram text-lg"></i> Follow @AyurvedaAyurveda
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CTA / FINISHING SECTION (same as about page) ====== -->
+    <section class="py-20 bg-herb">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <i class="fas fa-leaf text-white text-4xl mb-4 inline-block animate-herb-spin"></i>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">Connect With Our Experts</h2>
+                <p class="text-white/90 text-lg mb-8">Book a free 15-minute consultation to discover your dosha and receive personalized herbal recommendations.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="book.html" class="bg-white text-herb font-bold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition inline-flex items-center gap-2"><i class="fas fa-calendar-check"></i> Book Consultation</a>
+                    <a href="products.html" class="bg-white text-herb font-bold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition inline-flex items-center gap-2"><i class="fas fa-shopping-bag"></i> Explore Products</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER (exactly same as home page) ====== -->
+    <footer class="bg-white dark:bg-[#121813] text-soil dark:text-gray-300 pt-16 pb-8 border-t-4 border-herb transition-colors duration-300">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <!-- Brand Column -->
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-6">
+                        <div class="w-9 h-9 md:w-10 md:h-10 bg-herb rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-leaf text-white text-base md:text-lg animate-herb-spin"></i>
+                        </div>
+                        <span class="text-lg md:text-2xl font-display font-bold tracking-tight text-soil dark:text-white">NatureVeda</span>
+                    </div>
+                    <p class="text-sm text-dusk dark:text-gray-300 leading-relaxed mb-6">
+                        Herbal wisdom for modern wellbeing. Pure, potent, and planet-friendly.
+                    </p>
+                    <div class="flex justify-center md:justify-start gap-3">
+                        <a href="#" class="social-icon-herb"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon-herb"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon-herb"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <!-- Explore Links -->
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest font-bold text-herb dark:text-[#A7F3D0] mb-5">Explore</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="about.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">About Ayurveda</a></li>
+                        <li><a href="products.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Shop Herbs</a></li>
+                        <li><a href="wellness.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Wellness Programs</a></li>
+                        <li><a href="glossary.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Ayurveda Blog</a></li>
+                        <li><a href="book.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Book Consultation</a></li>
+                    </ul>
+                </div>
+
+                <!-- Community Links -->
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest font-bold text-herb dark:text-[#A7F3D0] mb-5">Community</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#newsletter" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Join Newsletter</a></li>
+                        <li><a href="contact.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Become a Partner</a></li>
+                        <li><a href="gallery.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Wellness Tips</a></li>
+                        <li><a href="glossary.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">FAQs</a></li>
+                        <li><a href="contact.html" class="text-dusk dark:text-gray-300 hover:text-herb dark:hover:text-[#A7F3D0] transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Studio Column -->
+                <div>
+                    <h4 class="text-xs uppercase tracking-widest font-bold text-herb dark:text-[#A7F3D0] mb-5">Studio</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3 text-dusk dark:text-gray-300">
+                            <i class="fas fa-map-marker-alt text-herb dark:text-[#A7F3D0]"></i>
+                            <span>45 Wellness Lane, LA</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-dusk dark:text-gray-300">
+                            <i class="fas fa-phone text-herb dark:text-[#A7F3D0]"></i>
+                            <span>(555) 123-8889</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-dusk dark:text-gray-300">
+                            <i class="fas fa-envelope text-herb dark:text-[#A7F3D0]"></i>
+                            <span>hello@ayurveda.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright Bar -->
+            <div class="mt-12 pt-8 border-t border-sand dark:border-dusk/30 text-center text-sm text-dusk dark:text-gray-300">
+                <p>© 2026 NatureVeda | Herbal &amp; Ayurvedic Wellness. All rights reserved. <span class="text-herb dark:text-[#A7F3D0]">♥ Nurture nature.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ====== SCRIPTS (same as home) ====== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle
+            const themeBtns = document.querySelectorAll('#theme-toggle, #mobile-theme-toggle');
+            themeBtns.forEach(btn => {
+                btn?.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+            });
+            if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+
+            // RTL toggle
+            function setRTL(isRTL) {
+                const html = document.documentElement;
+                if (isRTL) { html.setAttribute('dir', 'rtl'); localStorage.setItem('dir', 'rtl'); }
+                else { html.setAttribute('dir', 'ltr'); localStorage.setItem('dir', 'ltr'); }
+            }
+            const savedDir = localStorage.getItem('dir');
+            if (savedDir === 'rtl') document.documentElement.setAttribute('dir', 'rtl');
+            else document.documentElement.setAttribute('dir', 'ltr');
+
+            const rtlBtn = document.getElementById('rtl-toggle');
+            if (rtlBtn) {
+                rtlBtn.addEventListener('click', () => {
+                    const currentDir = document.documentElement.getAttribute('dir');
+                    setRTL(currentDir !== 'rtl');
+                });
+            }
+            const mobileRtlBtn = document.getElementById('mobile-rtl-toggle');
+            if (mobileRtlBtn) {
+                mobileRtlBtn.addEventListener('click', () => {
+                    const currentDir = document.documentElement.getAttribute('dir');
+                    setRTL(currentDir !== 'rtl');
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    const mobileToggle = document.getElementById('mobile-toggle');
+                    if (mobileMenu && mobileMenu.classList.contains('open')) {
+                        mobileMenu.classList.remove('open');
+                        if (mobileToggle && mobileToggle.querySelector('i')) {
+                            mobileToggle.querySelector('i').classList.remove('fa-times');
+                            mobileToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    }
+                });
+            }
+
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                    const icon = mobileToggle.querySelector('i');
+                    if (mobileMenu.classList.contains('open')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+                mobileMenu.querySelectorAll('a:not(#mobile-rtl-toggle)').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('open');
+                        if (mobileToggle.querySelector('i')) {
+                            mobileToggle.querySelector('i').classList.remove('fa-times');
+                            mobileToggle.querySelector('i').classList.add('fa-bars');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

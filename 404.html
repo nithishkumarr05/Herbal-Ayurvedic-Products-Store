@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 · Page Not Found | Ayurveda · Herbal & Ayurvedic Wellness</title>
+    <!-- Custom Favicon - Herbal leaf -->
+    <link rel="icon" type="image/svg+xml" href="assest/favicon.svg">
+    <meta name="description"
+        content="Whoops! That page has drifted away. The wisdom you seek is elsewhere — let's guide you back to the path of wellness.">
+
+    <!-- Tailwind CSS -->
+    <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        herb: '#EA580C',
+                        clay: '#F59E0B',
+                        sand: '#FFF7ED',
+                        soil: '#7F1D1D',
+                        cream: '#FAFAF9',
+                        dusk: '#78716C',
+                    },
+                    fontFamily: {
+                        'display': ['"Playfair Display"', 'serif'],
+                        'body': ['"Nunito"', 'system-ui', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'herb-pattern': "radial-gradient(circle at 20% 30%, rgba(234, 88, 12, 0.06) 0%, transparent 70%)",
+                    },
+                    animation: {
+                        'spin-slow': 'spinSlow 12s linear infinite',
+                        'herb-bounce': 'herbBounce 2.5s ease-in-out infinite',
+                        'float-gentle': 'floatGentle 4s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.5s ease-out',
+                        'herb-spin': 'herbSpin 4s ease-in-out infinite',
+                        'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        spinSlow: { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } },
+                        herbBounce: { '0%,100%': { transform: 'translateY(0) rotate(0deg)' }, '50%': { transform: 'translateY(-12px) rotate(8deg)' } },
+                        floatGentle: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-8px)' } },
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        herbSpin: { '0%': { transform: 'rotate(0deg) scale(1)' }, '50%': { transform: 'rotate(10deg) scale(1.05)' }, '100%': { transform: 'rotate(0deg) scale(1)' } },
+                        pulseSoft: { '0%,100%': { opacity: '0.6' }, '50%': { opacity: '1' } },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #FAFAF9;
+            font-family: 'Nunito', system-ui, sans-serif;
+            color: #7F1D1D;
+            line-height: 1.6;
+        }
+
+        .dark body {
+            background-color: #121212;
+            color: #F5F5F4;
+        }
+
+        /* Dark mode text overrides */
+        .dark .text-soil {
+            color: #F5F5F4;
+        }
+
+        .dark .text-dusk {
+            color: #D6D3D1;
+        }
+
+        
+
+        
+
+        
+
+        
+
+        /* Button styles - herb green */
+        .btn-primary {
+            background: #EA580C;
+            color: white;
+            padding: 0.85rem 2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+        }
+
+        .btn-primary:hover {
+            background: #3A6548;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.45);
+        }
+
+        .btn-secondary {
+            border: 1.5px solid #4A7C59;
+            background: transparent;
+            color: #4A7C59;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dark .btn-secondary {
+            color: #4A7C59;
+        }
+
+        .btn-secondary:hover {
+            background: #EA580C;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Accent line - earthy */
+        .herb-line {
+            width: 70px;
+            height: 3px;
+            background: #EA580C;
+            margin: 1rem auto;
+            border-radius: 3px;
+        }
+
+        .floating-leaf {
+            animation: floatGentle 4s ease-in-out infinite;
+        }
+
+        /* RTL Fixes */
+        [dir="rtl"] .space-x-3> :not([hidden])~ :not([hidden]) {
+            --tw-space-x-reverse: 1;
+            margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+            margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
+        }
+
+        [dir="rtl"] .ml-8 {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+
+        [dir="rtl"] .mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+
+        [dir="rtl"] .herb-line {
+            margin: 1rem auto;
+        }
+    
+        /* High Contrast Dark Mode Form & Badge Fixes */
+        .dark input, .dark select, .dark textarea {
+            background-color: #121813 !important;
+            color: #FFFFFF !important;
+            border-color: rgba(234, 88, 12, 0.3) !important;
+        }
+        .dark input::placeholder, .dark textarea::placeholder {
+            color: #D1D5DB !important;
+            opacity: 1 !important;
+        }
+        .dark select option {
+            background-color: #292524 !important;
+            color: #FFFFFF !important;
+        }
+        .dark label {
+            color: #F3F4F6 !important;
+        }
+        .dark .contact-card, .dark .consult-card, .dark .herb-card, .dark .auth-card {
+            background-color: #292524 !important;
+            border-color: rgba(234, 88, 12, 0.25) !important;
+        }
+
+    </style>
+</head>
+
+<body class="bg-cream dark:bg-canvas-dark herb-pattern">
+
+    <!-- ========== HEADER (simplified) ========== -->
+    <nav
+        class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#121212]/95 backdrop-blur-md border-b border-sand dark:border-dusk/30 shadow-sm">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-24 md:h-24 py-3 md:py-0">
+                <!-- Logo with leaf -->
+                <a href="index.html" class='flex items-center gap-2 md:gap-3 group shrink-0'>
+                    <div
+                        class="w-9 h-9 md:w-10 md:h-10 bg-herb rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition duration-300">
+                        <i class="fas fa-leaf text-white text-base md:text-lg animate-herb-spin"></i>
+                    </div>
+                    <div>
+                        <span
+                            class="text-lg md:text-2xl font-display font-bold tracking-tight text-soil dark:text-white">NatureVeda</span>
+                    </div>
+                </a>
+
+                <!-- Toggle Buttons Only -->
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle"
+                        class="w-10 h-10 rounded-full bg-sand dark:bg-dusk/40 text-herb dark:text-[#A7F3D0] hover:scale-110 transition flex items-center justify-center">
+                        <i class="fas fa-moon dark:hidden text-herb"></i>
+                        <i class="fas fa-sun hidden dark:inline text-amber-300"></i>
+                    </button>
+                    <button id="rtl-toggle"
+                        class="w-10 h-10 rounded-full bg-sand dark:bg-dusk/40 text-herb dark:text-[#A7F3D0] hover:scale-110 transition flex items-center justify-center font-bold text-base"
+                        title="Toggle RTL/LTR">⇄</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== 404 MAIN CONTENT ========== -->
+    <div class="min-h-screen flex items-center justify-center pt-32 pb-20 px-6">
+        <div class="max-w-2xl mx-auto text-center animate-fade-in-up">
+
+            <!-- Animated Leaf Icon -->
+            <div class="mb-6 floating-leaf">
+                <div
+                    class="w-28 h-28 md:w-36 md:h-36 rounded-full border-8 border-herb/30 flex items-center justify-center mx-auto relative">
+                    <i class="fas fa-leaf text-herb dark:text-[#A7F3D0] text-5xl md:text-6xl animate-herb-spin"></i>
+                    <div class="absolute inset-0 rounded-full border-4 border-herb/20 animate-pulse-soft"></div>
+                </div>
+            </div>
+
+            <!-- Large 404 Number -->
+            <div class="mb-4">
+                <span
+                    class="text-[120px] md:text-[180px] font-display font-extrabold text-herb dark:text-[#A7F3D0] leading-none tracking-tighter drop-shadow-lg">404</span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-soil dark:text-white mb-3">
+                The Wisdom You Seek Has Drifted
+            </h1>
+
+            <!-- Divider -->
+            <div class="herb-line"></div>
+
+            <!-- Message -->
+            <p class="text-base md:text-lg text-dusk dark:text-gray-300 mb-8 leading-relaxed max-w-md mx-auto">
+                This page has wandered off the path of wellness. Don't worry — let's guide you back to balance and
+                harmony.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-4 justify-center mb-12">
+                <a href="index.html" class="btn-primary">
+                    <i class="fas fa-seedling mr-1"></i> Return to Home
+                </a>
+                <a href="products.html" class="btn-secondary">
+                    <i class="fas fa-leaf mr-1 animate-herb-spin"></i> Explore Herbs
+                </a>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="border-t border-herb/20 pt-8">
+                <p class="text-sm text-dusk dark:text-gray-200 mb-4">
+                    <i class="fas fa-hand-holding-heart text-herb dark:text-[#A7F3D0] mr-2"></i> Nurture Your Wellness — Quick Navigation
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <a href="about.html"
+                        class="text-sm font-medium text-dusk dark:text-gray-300 hover:text-herb transition">About</a>
+                    <span class="text-herb dark:text-[#A7F3D0]/40">•</span>
+                    <a href="products.html"
+                        class="text-sm font-medium text-dusk dark:text-gray-300 hover:text-herb transition">Products</a>
+                    <span class="text-herb dark:text-[#A7F3D0]/40">•</span>
+                    <a href="glossary.html"
+                        class="text-sm font-medium text-dusk dark:text-gray-300 hover:text-herb transition">Glossary</a>
+                    <span class="text-herb dark:text-[#A7F3D0]/40">•</span>
+                    <a href="gallery.html"
+                        class="text-sm font-medium text-dusk dark:text-gray-300 hover:text-herb transition">Gallery</a>
+                    <span class="text-herb dark:text-[#A7F3D0]/40">•</span>
+                    <a href="book.html"
+                        class="text-sm font-medium text-dusk dark:text-gray-300 hover:text-herb transition">Consultation</a>
+                </div>
+            </div>
+
+            <!-- Gentle Note -->
+            <div class="mt-8 text-xs text-dusk dark:text-gray-300 font-medium">
+                <i class="fas fa-spa mr-1"></i> Like the healing power of nature, everything finds its way back to
+                balance.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+        // ---------- THEME TOGGLE ----------
+        const themeToggle = document.getElementById('theme-toggle');
+        function setTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            setTheme(true);
+        } else if (savedTheme === 'light') {
+            setTheme(false);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setTheme(true);
+        }
+        if (themeToggle) {
+            themeToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                setTheme(!document.documentElement.classList.contains('dark'));
+            });
+        }
+
+        // ---------- RTL TOGGLE ----------
+        const rtlBtn = document.getElementById('rtl-toggle');
+        function setRTL(isRTL) {
+            if (isRTL) {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+                localStorage.setItem('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+                localStorage.setItem('dir', 'ltr');
+            }
+        }
+        const savedDir = localStorage.getItem('dir');
+        if (savedDir === 'rtl') setRTL(true);
+        else setRTL(false);
+
+        if (rtlBtn) {
+            rtlBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const currentDir = document.documentElement.getAttribute('dir');
+                setRTL(currentDir !== 'rtl');
+            });
+        }
+
+        });
+    </script>
+</body>
+
+</html>
